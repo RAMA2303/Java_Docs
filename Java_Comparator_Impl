@@ -1,0 +1,66 @@
+package com.hibernate_second_level_cache.cache;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+
+//Java POJO class for Employee
+public class Employees implements Comparable<Employees> {
+
+	private Integer id;
+	private String Name;
+
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getName() {
+		return Name;
+	}
+	public void setName(String name) {
+		Name = name;
+	}
+	public Employees(Integer id, String name) {
+		super();
+		this.id = id;
+		Name = name;
+	}
+	
+	@Override
+	public String toString() {
+		return "Employees [id=" + id + ", Name=" + Name + "]";
+	}
+
+	@Override
+	public int compareTo(Employees o) {
+		return this.getId() - o.getId();
+	}
+
+}
+
+//Comparator class for Employee
+public class EmployeeComparator implements Comparator<Employees>{
+
+	@Override
+	public int compare(Employees o1, Employees o2) {
+		return o1.getId() - o2.getId();
+	}
+}
+
+//Main class to test the Employee Comparator
+public class EmployeeComp {
+
+	public static void main(String[] args) {
+		List<Employees> empList = new ArrayList<Employees>();
+		empList.add(new Employees(2, "Ramesh"));
+		empList.add(new Employees(1, "Ramashish")); 
+		//Invoking the Comparator to sort the Employee List
+		Collections.sort(empList, new EmployeeComparator());
+		System.out.println("Sorted Employee List:" + empList);
+	}
+
+}
