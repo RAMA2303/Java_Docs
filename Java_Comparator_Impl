@@ -7,7 +7,7 @@ import java.util.List;
 
 
 //Java POJO class for Employee
-public class Employees implements Comparable<Employees> {
+public class Employees {
 
 	private Integer id;
 	private String Name;
@@ -34,12 +34,6 @@ public class Employees implements Comparable<Employees> {
 	public String toString() {
 		return "Employees [id=" + id + ", Name=" + Name + "]";
 	}
-
-	@Override
-	public int compareTo(Employees o) {
-		return this.getId() - o.getId();
-	}
-
 }
 
 //Comparator class for Employee
