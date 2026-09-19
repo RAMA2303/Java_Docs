@@ -1,1 +1,31 @@
+package junitPractive;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class LRU extends LinkedHashMap<Integer, Employee> {
+
+	private final int capacity;
+
+	//very important to set accessOrder to true, otherwise it will not work as expected
+	public LRU(int capacity) {
+		super(2, 0.75f, true); //initial capacity, load factor, access order
+		this.capacity = capacity;
+	}
+
+	@Override
+	//It will be called after every put operation only
+	protected boolean removeEldestEntry(Map.Entry<Integer, Employee> eldest) {
+		return size() > capacity;
+	}
+
+	public static void main(String[] args) {
+		LRU lru = new LRU(2);
+		lru.put(1, new Employee(1, "John", "123 Main State", "555-1234"));
+		lru.put(2, new Employee(45, "John", "123 Main State", "555-1234"));	
+		lru.get(1);
+		lru.put(3, new Employee(5, "John", "123 Main State", "555-1234")); // This will remove the eldest entry (1, John)
+		System.out.println(lru.keySet()); // Output: [3, 2]
+	}
+
+}
