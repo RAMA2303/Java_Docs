@@ -1,0 +1,26 @@
+CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+CriteriaQuery<Employee> cq =
+cb.createQuery(Employee.class);
+
+Root<Employee> root = cq.from(Employee.class);
+
+List<Predicate> predicates = new ArrayList<>();
+
+if(name != null){
+    predicates.add(
+        cb.equal(root.get("name"), name)
+    );
+}
+
+if(salary != null){
+    predicates.add(
+        cb.greaterThan(root.get("salary"), salary)
+    );
+}
+
+cq.where(predicates.toArray(new Predicate[0]));
+
+return entityManager
+        .createQuery(cq)
+        .getResultList();
