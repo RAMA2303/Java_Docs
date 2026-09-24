@@ -1,0 +1,42 @@
+//Sliding Window
+resilience4j:
+  circuitbreaker:
+    instances:
+      paymentService:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 5
+// 10 recent calls --> if failure rate >= 50% --> OPEN circuit --> wait 10 seconds --> HALF_OPEN --> allow 3 test calls --> if success rate >= 50% --> FULL_OPEN ( CIRCUIT CLOSED )
+
+//Retry
+resilience4j:
+  retry:
+    instances:
+      paymentService:
+        maxAttempts: 3
+        waitDuration: 1s
+        retryExceptions:
+          - java.net.ConnectException
+          - java.util.concurrent.TimeoutException
+        ignoreExceptions:
+          - com.example.exception.InvalidPaymentException
+          - com.example.exception.PaymentNotFoundException
+
+//Timeout
+resilience4j:
+  timelimiter:
+    instances:
+      paymentService:
+        timeoutDuration: 2s
+
+//Bulkhead
+resilience4j:
+  bulkhead:
+    instances:
+      paymentService:
+        maxConcurrentCalls: 20
+        maxWaitDuration: 100ms
+
