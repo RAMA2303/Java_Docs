@@ -2,7 +2,7 @@
 resilience4j:
   circuitbreaker:
     instances:
-      paymentService:
+      paymentService: //name of this cicruit breaker which will be mapped in gateway conf
         slidingWindowType: COUNT_BASED
         slidingWindowSize: 10
         failureRateThreshold: 50
