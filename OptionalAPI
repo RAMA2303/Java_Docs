@@ -1,0 +1,11 @@
+public User getUserById(Long id) {
+
+    return userRepository.findById(id) // find by Id returns optional<User>
+            .orElseThrow(() ->
+                    new UserNotFoundException(
+                            "User not found with id: " + id
+                    )
+            );
+}
+
+
