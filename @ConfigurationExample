@@ -1,0 +1,35 @@
+//yaml of service
+server:
+  port: 8084
+
+app:
+  name: OMS
+  timeout: 5000
+  max-retries: 3
+  payment:
+    url: http://localhost:8085
+    enabled: true
+=============================================================================
+//Accessing via @Value
+@Value("${app.max-retries:5}") //default value if property is not found
+private int maxRetries;
+
+==============================================================================
+//Accessing via @ConfigurationProperties
+@Component
+@ConfigurationProperties(prefix = "app")
+public class AppProperties {
+
+    private String name;
+    private int timeout;
+    private int maxRetries;
+    private Payment payment;
+    // getters/setters
+
+    public static class Payment {
+
+        private String url;
+        private boolean enabled;
+        // getters/setters
+    }
+}
