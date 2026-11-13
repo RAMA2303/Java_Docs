@@ -1,0 +1,72 @@
+package com.hibernate_second_level_cache.cache;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class CardGame {
+
+	private static enum Suits {
+		DIAMOND, SPADE, CLUB, HEARTS
+	}
+
+	private static enum Ranks {
+		TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE
+	}
+
+	private static class Card implements Comparable<Card> {
+		private Suits suit;
+		private Ranks rank;
+
+		public Card(Suits s, Ranks r) {
+			this.rank = r;
+			this.suit = s;
+		}
+
+		@Override
+		public int compareTo(Card otherCard) {
+			return this.rank.compareTo(otherCard.rank);
+		}
+	}
+
+	private static class CardDeck {
+		private List<Card> cards = new ArrayList<>();
+
+		public CardDeck() {
+			cards.clear();
+			for (Suits suit : Suits.values()) {
+				for (Ranks ranks : Ranks.values()) {
+					cards.add(new Card(suit, ranks));
+				}
+			}
+
+			this.shuffle();
+		}
+
+		public List<Card> getCards() {
+			return Collections.unmodifiableList(cards);
+		}
+
+		private void shuffle() {
+			Collections.shuffle(cards);
+		}
+
+	}
+
+	public static void main(String[] args) {
+		CardDeck deck = new CardDeck();
+		Card card1 =  new Card(Suits.CLUB, Ranks.TWO);
+		Card card2 = new Card(Suits.DIAMOND, Ranks.JACK);
+		int result = card1.compareTo(card2);
+		
+		if(result < 0) {
+			System.out.print("The Winner is : card2");
+		} else if(result > 0) {
+			System.out.print("The Winner is : card1");
+		} else {
+			System.out.print("Both card is of same category");
+		}
+	
+	}
+
+}
