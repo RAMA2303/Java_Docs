@@ -19,8 +19,8 @@ public class CardGame {
 		private Ranks rank;
 
 		public Card(Suits s, Ranks r) {
-			this.rank = r;
-			this.suit = s;
+			this.rank = Objects.requireNonNull(r);
+			this.suit = Objects.requireNonNull(s);
 		}
 
 		@Override
